@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/cart.css">
+  <link rel="stylesheet" href="/style.css">
+     <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="site-header">
+  <div class="container header-inner">
+
+    <!-- LOGO -->
+    <a class="brand" href="/dashboard">
+      <img src="/image/pic11.png" id="picsate">
+    </a>
+
+  
+
+    <!-- NAVIGATION -->
+    <nav class="main-nav" id="mainNav">
+
+      <button class="close-menu" id="closeBtn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <a href="/dashboard">Home</a>
+      <a href="/products">Shop</a>
+      <a href="/products/clothes">Clothes</a>
+      <a href="/products/shoes">Shoes</a>
+      <a href="/products/watches">Watches</a>
+      <a href="/my-orders">📦 My Orders</a>
+      <a href="/logout" class="logout-link">🚪 Logout</a>
+
+    </nav>
+
+    <!-- CART + USER -->
+    <div class="nav-actions">
+      <span class="greeting" style="font-weight: bold;"><span style="color: orangered;font-weight: bold;">  Hi, <%= typeof user !== 'undefined' ? user.fullName : 'Guest' %></span>
+      <a href="/cart"><i class="fa-solid fa-cart-shopping" id="imp"></i></a>
+    </div>
+  <!-- MENU ICON -->
+    <button class="menu-toggle" id="menuBtn">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <h1>Your Shopping Cart</h1>
+  <p>Review your items before checkout</p>
+</section>
+
+<!-- CART CONTAINER -->
+<section class="cart-container">
+
+  <!-- LEFT ITEMS -->
+  <div class="cart-items">
+    <% let subtotal = 0; %>
+
+    <% if(cart && cart.length > 0){ %>
+      <% cart.forEach((item, i) => { 
+        subtotal += item.price * item.qty; 
+      %>
+
+        <div class="cart-card">
+          <img src="<%= item.image %>" class="cart-img">
+
+          <div class="item-info">
+            <h3><%= item.name %></h3>
+            <p class="price">$<%= item.price %></p>
+
+            <div class="qty-box">
+              <a href="/cart/update/<%= i %>?action=dec"><button>-</button></a>
+              <input type="number" value="<%= item.qty %>" readonly>
+              <a href="/cart/update/<%= i %>?action=inc"><button>+</button></a>
+            </div>
+
+            <a href="/cart/remove/<%= i %>">
+              <p class="remove">Remove</p>
+            </a>
+          </div>
+        </div>
+
+      <% }) %>
+    <% } else { %>
+      <div class="cart-card">
+        <p>Your cart is empty.</p>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- RIGHT SUMMARY -->
+  <div class="cart-summary">
+    <h2>Order Summary</h2>
+
+    <div class="summary-box">
+  <p>Subtotal <span>$<%= subtotal.toFixed(2) %></span></p>
+  <p>Shipping <span>$5.00</span></p>
+  <p>Tax <span>$2.00</span></p>
+  <hr>
+  <h3>Total <span>$<%= (subtotal + 7).toFixed(2) %></span></h3>
+</div>
+
+    <a href="/checkout">
+      <button class="checkout-btn">Proceed to Checkout</button>
+    </a>
+  </div>
+
+</section>
+
+
+ <footer class="premium-footer">
+  <div class="footer-grid container">
+  
+    <div>
+      <h3>E.BAZAR</h3>
+      <p>Luxury fashion store — trusted by thousands</p>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <a href="#">Home</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <div>
+      <h4>Customer Care</h4>
+      <a href="#">Shipping Policy</a>
+      <a href="#">Refund Policy</a>
+      <a href="#">Support</a>
+    </div>
+
+    <div>
+      <h4>Follow Us</h4>
+      <i class="fab fa-facebook"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-twitter"></i>
+    </div>
+
+  </div>
+
+  <p class="footer-copy">© 2025 E.BAZAR — All rights reserved</p>
+</footer>
+<script src="/logout-modal.js"></script>
+
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const closeBtn = document.getElementById("closeBtn");
+  const nav = document.getElementById("mainNav");
+
+  menuBtn.onclick = () => nav.classList.add("show");
+  closeBtn.onclick = () => nav.classList.remove("show");
+</script>
+</body>
+
+</html>

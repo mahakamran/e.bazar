@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - MahaShop</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+
+    <div class="signup-container">
+
+        <div class="signup-box">
+            <h2>Create Account</h2>
+            <p class="subtitle">Join us and start shopping</p>
+
+            <form action="/register" method="POST">
+
+                <label>Full Name</label>
+                <input type="text" name="fullName" placeholder="Maha Kamran" required>
+
+                <label>Email</label>
+                <input type="email" name="email" placeholder="example@gmail.com" required>
+
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Choose a strong password" required>
+
+                <label>Confirm Password</label>
+                <input type="password" name="confirmPassword" placeholder="Re-enter password" required>
+
+                <button class="signup-btn">Create Account</button>
+
+                <p class="login-text">
+                    Already have an account?
+                    <a href="/login">Login</a>
+                </p>
+
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

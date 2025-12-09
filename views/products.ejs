@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MahaShop — Shop</title>
+
+    <!-- <link rel="stylesheet" href="products.css"> -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+<style>
+   @media (max-width:600px) {
+ .filters{
+        display:none;
+ }
+   }
+</style>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+
+    <!-- LOGO -->
+    <a class="brand" href="/dashboard">
+      <img src="/image/pic11.png" id="picsate">
+    </a>
+
+  
+
+    <!-- NAVIGATION -->
+    <nav class="main-nav" id="mainNav">
+
+      <button class="close-menu" id="closeBtn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <a href="/dashboard">Home</a>
+      <a href="/products">Shop</a>
+      <a href="/products/clothes">Clothes</a>
+      <a href="/products/shoes">Shoes</a>
+      <a href="/products/watches">Watches</a>
+      <a href="/my-orders">📦 My Orders</a>
+      <a href="/logout" class="logout-link">🚪 Logout</a>
+
+    </nav>
+
+    <!-- CART + USER -->
+    <div class="nav-actions">
+      <span class="greeting" style="font-weight: bold;"><span style="color: orangered;font-weight: bold;">Hi,</span> <%= user.fullName %></span>
+      <a href="/cart"><i class="fa-solid fa-cart-shopping" id="imp"></i></a>
+    </div>
+  <!-- MENU ICON -->
+    <button class="menu-toggle" id="menuBtn">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h1>All Products</h1>
+        <p>Find the best products from our latest collection</p>
+    </section>
+
+    <!-- SHOP AREA -->
+    <section class="shop-container">
+
+        <!-- FILTER SIDEBAR -->
+        <aside class="filters">
+            <h3>Filters</h3>
+
+            <div class="filter-box">
+                <h4>Category</h4>
+                <ul>
+                    <li><a href="/products">All</a></li>
+
+<% categories.forEach(cat => { %>
+    <li>
+        <a href="/products/<%= cat.name.toLowerCase() %>">
+            <%= cat.name %>
+        </a>
+    </li>
+<% }) %>
+
+                </ul>
+            </div>
+
+            <div class="filter-box">
+                <h4>Price</h4>
+                <input type="range" min="10" max="200" />
+                <p>Price Range: $10 - $200</p>
+            </div>
+
+            <div class="filter-box">
+                <h4>Sort By</h4>
+                <select>
+                    <option>Default</option>
+                    <option>Low to High</option>
+                    <option>High to Low</option>
+                </select>
+            </div>
+        </aside>
+
+        <!-- PRODUCTS GRID -->
+        <div class="products-grid">
+
+            <% products.forEach(product => { %>
+  <div class="product-card">
+    <div class="product-img-box" style="box-shadow: none;">
+        <img src="<%= product.image %>" alt="<%= product.name %>" style="box-shadow: none;">
+    </div>
+
+    <h3 class="p-title"><%= product.name %></h3>
+    <p class="p-price">$<%= product.price %></p>
+
+    <a href="/product/<%= product._id %>" class="p-btn">View Details</a>
+</div>
+
+
+
+            <% }) %>
+
+        </div>
+
+    </section>
+
+   
+ <footer class="premium-footer">
+  <div class="footer-grid container">
+  
+    <div>
+      <h3>E.BAZAR</h3>
+      <p>Luxury fashion store — trusted by thousands</p>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <a href="#">Home</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <div>
+      <h4>Customer Care</h4>
+      <a href="#">Shipping Policy</a>
+      <a href="#">Refund Policy</a>
+      <a href="#">Support</a>
+    </div>
+
+    <div>
+      <h4>Follow Us</h4>
+      <i class="fab fa-facebook"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-twitter"></i>
+    </div>
+
+  </div>
+
+  <p class="footer-copy">© 2025 E.BAZAR — All rights reserved</p>
+</footer>
+
+
+    <!-- LOGOUT MODAL -->
+    <div id="logoutModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to logout?</p>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" id="cancelLogout">Cancel</button>
+                <a href="/logout" class="btn-logout">Yes, Logout</a>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+  let slides = document.querySelectorAll("#reviewSlider .slide");
+  let index = 0;
+
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 3000);
+</script>
+<script src="/logout-modal.js"></script>
+
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const closeBtn = document.getElementById("closeBtn");
+  const nav = document.getElementById("mainNav");
+
+  menuBtn.onclick = () => nav.classList.add("show");
+  closeBtn.onclick = () => nav.classList.remove("show");
+</script>
+
+
+</body>
+
+</html>

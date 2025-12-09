@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>E.BAZAR — Admin Orders</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{--bg:#f6f7fb;--card:#fff;--muted:#687182;--accent:#FFD700;--dark:#0b1220}
+    *{box-sizing:border-box}
+    body{font-family:Poppins;margin:0;background:var(--bg);color:var(--dark)}
+    .app{display:flex;min-height:100vh}
+
+    .sidebar{width:260px;background:#0f1724;color:#fff;padding:22px 18px;display:flex;flex-direction:column;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+    .brand img{width:44px;height:44px;border-radius:8px;object-fit:cover}
+    .title{font-weight:700;font-size:18px}
+    .nav{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .nav a{text-decoration:none;color:#c9d2df;padding:10px;border-radius:8px;display:flex;align-items:center;gap:10px}
+    .nav a.active,.nav a:hover{background:rgba(255,215,0,0.12);color:var(--accent)}
+    .icon{width:18px;text-align:center}
+
+    .main{flex:1;padding:18px 28px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    .search{flex:1;max-width:520px;display:flex;gap:10px}
+    .search input{flex:1;padding:10px;border-radius:10px;border:1px solid #ddd}
+    .top-actions{display:flex;gap:12px}
+    .icon-btn{background:#fff;border:1px solid #eee;padding:8px 10px;border-radius:10px}
+
+    .card{background:#fff;padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(11,17,32,0.04)}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #f0f2f6}
+    th{color:var(--muted);font-size:13px}
+
+    .badge{padding:6px 10px;border-radius:8px;font-size:12px;font-weight:600}
+    .paid{background:rgba(40,167,69,0.12);color:#28a745}
+    .pending{background:rgba(255,193,7,0.12);color:#c47f00}
+    .cancel{background:rgba(255,20,20,0.12);color:#d62828}
+
+    .btn-view{
+      background:var(--accent);
+      padding:7px 12px;
+      border:none;
+      border-radius:6px;
+      font-size:12px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    /* ===== Responsive Sidebar Controls ===== */
+.menu-btn{
+  display:none;
+  font-size:24px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:#0b1220;
+}
+
+.close-btn{
+  display:none;
+  font-size:22px;
+  background:none;
+  border:none;
+  color:#fff;
+  margin-bottom:10px;
+  cursor:pointer;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:none;
+  z-index:998;
+}
+
+.overlay.show{display:block}
+
+@media(max-width:900px){
+  .sidebar{
+    position:fixed;
+    top:0;
+    left:-280px;
+    height:100vh;
+    z-index:999;
+    transition:.3s ease;
+  }
+  .sidebar.show{left:0}
+
+  .menu-btn{display:block}
+}
+/* ===== Responsive: Table → Cards (Mobile only) ===== */
+
+/* Desktop: normal table rahe */
+@media (min-width: 901px){
+  .orders-grid{
+    display:none;
+  }
+}
+
+/* Mobile: table hide + cards show */
+@media (max-width:900px){
+  table{
+    display:none;
+  }
+
+  .orders-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+
+  .order-card{
+    margin-left: -15px;
+    width: 90vw;
+    background:#fff;
+    padding:14px;
+    border-radius:14px;
+    box-shadow:0 6px 18px rgba(11,17,32,0.05);
+    border:1px solid #f0f2f6;
+  }
+
+  .order-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    margin-bottom:6px;
+    margin-left: 0;
+  }
+.card{
+  width: 90vw;
+  margin-left: -15px;
+}
+}
+
+
+  </style>
+</head>
+
+<body>
+  <!-- Mobile Top Bar -->
+<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fff;border-bottom:1px solid #eee;">
+  <button class="menu-btn" id="openMenu">☰</button>
+  <strong>E.BAZAR Admin</strong>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeMenu">✖</button>
+
+    <a class="brand" href="#">
+      <img src="/image/pic11.png" alt="" style="background-color: white;">
+      <div>
+        <div class="title">E.BAZAR Admin</div>
+        <div style="font-size:12px;color:#9aa6b8">manage products & orders</div>
+      </div>
+    </a>
+
+    <nav class="nav">
+    <a href="/admin/dashboard" class="active"><span class="icon">🏠</span> Dashboard</a>
+
+    <a href="/admin/products"><span class="icon">📦</span> Products</a>
+
+    <a href="/admin/add-product"><span class="icon">➕</span> Add Product</a>
+
+    <a href="/admin/orders"><span class="icon">🧾</span> Orders</a>
+
+    <a href="/admin/users"><span class="icon">👥</span> Users</a>
+
+    <a href="/admin/categories"><span class="icon">📂</span> Categories</a>
+
+    <a href="/admin/settings"><span class="icon">⚙️</span> Settings</a>
+</nav>
+
+    <div style="margin-top:auto;font-size:13px;color:#9aa6b8">
+      Logged in as <strong>Admin</strong>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;flex:1">
+        <div class="search"><input type="text" id="orderSearch" placeholder="Search orders...">
+</div>
+        <div class="top-actions">
+          <div class="icon-btn">🔔</div>
+          <div class="icon-btn">💬</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS TABLE -->
+    <section class="card">
+      <h2 style="margin-top:0" id="ebazar">Orders List</h2>
+
+      <table>
+        <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Items</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+     
+        <% if(orders.length > 0){ %>
+          <% orders.forEach(order => { %>
+            <tr>
+              <td>#<%= order._id.toString().slice(-6) %></td>
+              <td><%= order.name %></td>
+              <td><%= order.items.length %></td>
+              <td>$<%= order.totalAmount.toFixed(2) %></td>
+              <td><%= new Date(order.createdAt).toDateString() %></td>
+
+              <td>
+                <%
+                  let statusClass = '';
+                 const st = order.status.toLowerCase();
+
+if(st === 'pending') statusClass = 'pending';
+else if(st === 'approved' || st === 'completed') statusClass = 'paid';
+else if(st === 'cancelled') statusClass = 'cancel';
+
+                %>
+                <span class="badge <%= statusClass %>">
+                  <%= order.status.charAt(0).toUpperCase() + order.status.slice(1) %>
+                </span>
+              </td>
+
+              <td>
+                <form action="/admin/orders/<%= order._id %>" method="GET">
+                  <button type="submit" class="btn-view">View</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+
+        <% } else { %>
+
+          <tr>
+            <td colspan="7" style="text-align:center;padding:20px;">No orders found.</td>
+          </tr>
+
+        <% } %>
+
+        </tbody>
+      </table>
+    </section>
+<div class="orders-grid">
+<% if(orders.length > 0){ %>
+  <% orders.forEach(order => { 
+    let statusClass = '';
+    const st = order.status.toLowerCase();
+
+    if(st === 'pending') statusClass = 'pending';
+    else if(st === 'approved' || st === 'completed') statusClass = 'paid';
+    else if(st === 'cancelled') statusClass = 'cancel';
+  %>
+    <br>
+  <div class="order-card">
+    <div class="order-row"><span>Order</span><strong>#<%= order._id.toString().slice(-6) %></strong></div>
+    <div class="order-row"><span>Name</span><strong><%= order.name %></strong></div>
+    <div class="order-row"><span>Items</span><strong><%= order.items.length %></strong></div>
+    <div class="order-row"><span>Amount</span><strong>$<%= order.totalAmount.toFixed(2) %></strong></div>
+    <div class="order-row"><span>Status</span>
+      <span class="badge <%= statusClass %>">
+      <%= order.status.charAt(0).toUpperCase() + order.status.slice(1) %>
+      </span>
+    </div>
+
+    <form action="/admin/orders/<%= order._id %>" method="GET">
+      <button class="btn-view" style="width:100%;margin-top:8px">View</button>
+    </form>
+  </div>
+  <% }) %>
+<% } %>
+</div>
+
+  </main>
+</div>
+<script>
+  const searchInput = document.getElementById("orderSearch");
+
+  searchInput.addEventListener("keyup", function () {
+    const filter = searchInput.value.toLowerCase();
+    const rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+      const orderId = row.children[0]?.textContent.toLowerCase() || '';
+      const customer = row.children[1]?.textContent.toLowerCase() || '';
+      const status = row.children[5]?.textContent.toLowerCase() || '';
+
+      if (orderId.includes(filter) || customer.includes(filter) || status.includes(filter)) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  });
+</script>
+<script>
+const openBtn = document.getElementById("openMenu");
+const closeBtn = document.getElementById("closeMenu");
+const sidebar = document.querySelector(".sidebar");
+const overlay = document.getElementById("overlay");
+
+openBtn.onclick = () => {
+  sidebar.classList.add("show");
+  overlay.classList.add("show");
+};
+
+closeBtn.onclick = () => {
+  sidebar.classList.remove("show");
+  overlay.classList.remove("show");
+};
+
+overlay.onclick = () => {
+  sidebar.classList.remove("show");
+  overlay.classList.remove("show");
+};
+</script>
+<script>
+  const searchInputs = document.getElementById("orderSearch");
+
+searchInputs.addEventListener("keyup", function () {
+  const filter = searchInputs.value.toLowerCase();
+
+  const rows = document.querySelectorAll("tbody tr");
+  const cards = document.querySelectorAll(".order-card");
+
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(filter) ? "" : "none";
+  });
+
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(filter) ? "block" : "none";
+  });
+});
+
+</script>
+</body>
+</html>

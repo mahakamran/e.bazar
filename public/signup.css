@@ -1,0 +1,150 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+}
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.signup-box {
+    width: 380px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 6px;
+    font-size: 28px;
+}
+
+.subtitle {
+    color: #555;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+}
+
+.signup-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup-btn:hover {
+    background: #333;
+}
+
+.login-text {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.login-text a {
+    text-decoration: none;
+    color: #111;
+    font-weight: bold;
+}
+
+.login-text a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Fix */
+@media (max-width: 600px) {
+    .signup-box {
+        width: 100%;
+        padding: 25px;
+    }
+
+    body {
+        background: #ffffff;
+    }
+}
+/* ===== FULL RESPONSIVE UPGRADE (no design change) ===== */
+
+/* For tablets */
+@media (max-width: 992px) {
+  .signup-box {
+    width: 100%;
+    max-width: 420px;
+  }
+}
+
+/* For mobile phones */
+@media (max-width: 600px) {
+  .signup-container {
+    height: auto;
+    min-height: 100vh;
+    padding: 10px;
+  }
+
+  .signup-box {
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  input {
+    font-size: 14px;
+    padding: 11px;
+  }
+
+  .signup-btn {
+    font-size: 15px;
+    padding: 11px;
+  }
+}
+
+/* For very small devices */
+@media (max-width: 400px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  .signup-box {
+    padding: 15px;
+  }
+
+  label {
+    font-size: 13px;
+  }
+}

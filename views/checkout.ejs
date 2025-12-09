@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MahaShop | Checkout</title>
+  <link rel="stylesheet" href="/checkout.css">
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+
+    <!-- LOGO -->
+    <a class="brand" href="/dashboard">
+      <img src="/image/pic11.png" id="picsate">
+    </a>
+
+  
+
+    <!-- NAVIGATION -->
+    <nav class="main-nav" id="mainNav">
+
+      <button class="close-menu" id="closeBtn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <a href="/dashboard">Home</a>
+      <a href="/products">Shop</a>
+      <a href="/products/clothes">Clothes</a>
+      <a href="/products/shoes">Shoes</a>
+      <a href="/products/watches">Watches</a>
+      <a href="/my-orders">📦 My Orders</a>
+      <a href="/logout" class="logout-link">🚪 Logout</a>
+
+    </nav>
+
+    <!-- CART + USER -->
+    <div class="nav-actions">
+      <span class="greeting" style="font-weight: bold;"><span style="color: orangered;font-weight: bold;">Hi, <%= typeof user !== 'undefined' ? user.fullName : 'Guest' %></span>
+      <a href="/cart"><i class="fa-solid fa-cart-shopping" id="imp"></i></a>
+    </div>
+  <!-- MENU ICON -->
+    <button class="menu-toggle" id="menuBtn">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<section class="checkout-container">
+
+  <!-- LEFT: CUSTOMER FORM -->
+  <div class="checkout-form">
+    <h2>Delivery Information</h2>
+
+    <form action="/place-order" method="POST">
+
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" name="name" required>
+      </div>
+
+      <div class="input-group">
+        <label>Phone Number</label>
+        <input type="text" name="phone" required>
+      </div>
+
+      <div class="input-group">
+        <label>Address</label>
+        <textarea name="address" required></textarea>
+      </div>
+
+      <div class="input-group">
+        <label>City</label>
+        <input type="text" name="city" required>
+      </div>
+
+      <div class="cod-box">
+        <input type="radio" checked>
+        <span>Cash on Delivery</span>
+      </div>
+
+      <button class="place-order-btn">Place Order</button>
+
+    </form>
+  </div>
+
+  <!-- RIGHT: ORDER SUMMARY -->
+  <div class="checkout-summary">
+    <h2>Order Summary</h2>
+
+    <% let subtotal = 0; %>
+    <% cart.forEach(item => { subtotal += item.price * item.qty }) %>
+
+    <% cart.forEach(item => { %>
+      <div class="summary-item">
+        <p><%= item.name %> × <%= item.qty %></p>
+        <span>$<%= (item.price * item.qty).toFixed(2) %></span>
+      </div>
+    <% }) %>
+
+    <hr>
+
+    <div class="summary-item">
+      <strong>Total</strong>
+      <strong>$<%= (subtotal + 7).toFixed(2) %></strong>
+    </div>
+
+  </div>
+
+</section>
+ <footer class="premium-footer">
+  <div class="footer-grid container">
+  
+    <div>
+      <h3>E.BAZAR</h3>
+      <p>Luxury fashion store — trusted by thousands</p>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <a href="#">Home</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <div>
+      <h4>Customer Care</h4>
+      <a href="#">Shipping Policy</a>
+      <a href="#">Refund Policy</a>
+      <a href="#">Support</a>
+    </div>
+
+    <div>
+      <h4>Follow Us</h4>
+      <i class="fab fa-facebook"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-twitter"></i>
+    </div>
+
+  </div>
+
+  <p class="footer-copy">© 2025 E.BAZAR — All rights reserved</p>
+</footer>
+<script src="/logout-modal.js"></script>
+
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const closeBtn = document.getElementById("closeBtn");
+  const nav = document.getElementById("mainNav");
+
+  menuBtn.onclick = () => nav.classList.add("show");
+  closeBtn.onclick = () => nav.classList.remove("show");
+</script>
+</body>
+</html>

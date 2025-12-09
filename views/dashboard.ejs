@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MahaShop — Dashboard</title>
+
+  <!-- external CSS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+<header class="site-header">
+  <div class="container header-inner">
+
+    <!-- LOGO -->
+    <a class="brand" href="/dashboard">
+      <img src="/image/pic11.png" id="picsate">
+    </a>
+
+  
+
+    <!-- NAVIGATION -->
+    <nav class="main-nav" id="mainNav">
+
+      <button class="close-menu" id="closeBtn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <a href="/dashboard">Home</a>
+      <a href="/products">Shop</a>
+      <a href="/products/clothes">Clothes</a>
+      <a href="/products/shoes">Shoes</a>
+      <a href="/products/watches">Watches</a>
+      <a href="/my-orders">📦 My Orders</a>
+      <a href="/logout" class="logout-link">🚪 Logout</a>
+
+    </nav>
+
+    <!-- CART + USER -->
+    <div class="nav-actions">
+      <span class="greeting" style="font-weight: bold;"><span style="color: orangered;font-weight: bold;">Hi,</span> <%= user.fullName %></span>
+      <a href="/cart"><i class="fa-solid fa-cart-shopping" id="imp"></i></a>
+    </div>
+  <!-- MENU ICON -->
+    <button class="menu-toggle" id="menuBtn">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-left">
+        <h1>Welcome <%= user.fullName %> 🎉</h1>
+        <p class="lead">Enjoy the best deals specially personalized for you.</p>
+
+        <div class="hero-ctas">
+          <a href="/products" class="btn-primary">Shop All</a>
+          <a href="/products/shoes" class="btn-secondary">Shop Shoes</a>
+        </div>
+
+        <ul class="hero-features">
+          <li>Free shipping over $50</li>
+          <li>30-day easy returns</li>
+          <li>Secure payments</li>
+        </ul>
+      </div>
+
+      <div class="hero-right">
+        <img src="/image/pic2.png" alt="" class="hero-image">
+      </div>
+    </div>
+
+
+
+    <br>
+    <br>
+  </section>
+  <section class="stats container">
+  <div class="stat-box">10k+ Happy Customers</div>
+  <div class="stat-box">5k+ Orders Delivered</div>
+  <div class="stat-box">1k+ Premium Products</div>
+  <div class="stat-box">4.9⭐ Rating</div>
+</section>
+<br>
+<br>
+
+  <!-- CATEGORIES -->
+  <section class="categories container">
+    <a class="cat-card" href="/products/clothes">
+      <img src="/image/pic3.png" alt="Clothes" id="box1">
+     <span>Clothes</span>
+    </a>
+    <a class="cat-card" href="/products/shoes">
+      <img src="/image/pic5.png" alt="Shoes">
+      <span>Shoes</span>
+    </a>
+    <a class="cat-card" href="/products/watches">
+      <img src="/image/pic4.png" alt="Watches">
+     <span>Watch</span>
+    </a>
+    <a class="cat-card" href="/products">
+      <img src="/image/pic6.png" alt="Accessories">
+      <span>Accessories</span>
+    </a>
+  </section>
+  <br>
+  <br>
+  <br>
+  <section class="container section why-us">
+  <h2 style="text-align:center;margin-bottom:20px;">Why Shop With Us?</h2>
+
+  <div class="features-row">
+    <div class="feature-box">🚚 Fast Delivery</div>
+    <div class="feature-box">💯 Best Quality</div>
+    <div class="feature-box">🔒 Secure Payments</div>
+    <div class="feature-box">🎁 Special Discounts</div>
+  </div>
+</section>
+<br>
+<br>
+<br>
+
+  <!-- FEATURED PRODUCTS -->
+<section class="featured-products container">
+  <div class="fp-head">
+    <h2 style="padding-left: 30px;">Featured Products</h2>
+    <a href="/products" class="view-all" style="padding-left: 30px;">View all</a>
+  </div>
+
+  <div class="fp-grid">
+    <div class="fp-card" style="width: 300px;margin-left: 20px;">
+      <img src="/image/pic4.png" alt="">
+      <h4>Classic White Tee</h4>
+      <p class="price">$29.99</p>
+      <div class="fp-actions">
+        <button>Add to cart</button>
+        <a href="#">View</a>
+      </div>
+    </div>
+
+    <div class="fp-card" style="width: 300px;margin-left: 40px;">
+      <img src="/image/pic5.png" alt="">
+      <h4>Leather Handbag</h4>
+      <p class="price">$119.00</p>
+      <div class="fp-actions">
+        <button>Add to cart</button>
+        <a href="#">View</a>
+      </div>
+    </div>
+
+    <div class="fp-card" style="width: 300px;margin-left: 60px;">
+      <img src="/image/pic6.png" alt="">
+      <h4>Sport Sneakers</h4>
+      <p class="price">$89.50</p>
+      <div class="fp-actions">
+        <button>Add to cart</button>
+        <a href="#">View</a>
+      </div>
+    </div>
+
+    <div class="fp-card" style="width: 300px;margin-left: 80px;">
+      <img src="/image/pic8.png" alt="">
+      <h4>Denim Jacket</h4>
+      <p class="price">$79.00</p>
+      <div class="fp-actions">
+        <button>Add to cart</button>
+        <a href="#">View</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <div class="product-grid" id="featuredGrid"></div>
+  </section>
+<section class="featured container">
+  <div class="section-head">
+    <h2>🔥 Top Selling</h2>
+  </div>
+  <div class="product-grid" id="topSellingGrid"></div>
+</section>
+<br>
+<br>
+  <!-- DEAL / PROMO -->
+  <section class="promo container">
+    <div class="promo-card">
+      <h3>Winter Sale — Up to 50% OFF</h3>
+      <p>Selected styles. Limited time only.</p>
+      <a href="/products" class="btn-primary">Shop Deals</a>
+    </div>
+  </section>
+  <br>
+  <br>
+<section class="reviews-slider container">
+  <h2 class="section-title">💬 Customer Love</h2>
+
+  <div class="slider" id="reviewSlider">
+    <div class="slide active">“Absolutely beautiful dresses! 💖” – Ayesha</div>
+    <div class="slide">“Fast delivery & best quality!” – Ali</div>
+    <div class="slide">“My favorite store forever 😍” – Sana</div>
+    <div class="slide">“Amazing packaging — loved it 🎁” – Hina</div>
+    <div class="slide">“Affordable & premium quality” – Usman</div>
+  </div>
+</section>
+
+
+ <footer class="premium-footer">
+  <div class="footer-grid container">
+  
+    <div>
+      <h3>E.BAZAR</h3>
+      <p>Luxury fashion store — trusted by thousands</p>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <a href="#">Home</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <div>
+      <h4>Customer Care</h4>
+      <a href="#">Shipping Policy</a>
+      <a href="#">Refund Policy</a>
+      <a href="#">Support</a>
+    </div>
+
+    <div>
+      <h4>Follow Us</h4>
+      <i class="fab fa-facebook"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-twitter"></i>
+    </div>
+
+  </div>
+
+  <p class="footer-copy">© 2025 E.BAZAR — All rights reserved</p>
+</footer>
+
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+<!-- LOGOUT MODAL -->
+<div id="logoutModal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>Confirm Logout</h3>
+    <p>Are you sure you want to logout?</p>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" id="cancelLogout">Cancel</button>
+      <a href="/logout" class="btn-logout">Yes, Logout</a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  let slides = document.querySelectorAll("#reviewSlider .slide");
+  let index = 0;
+
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 3000);
+</script>
+<script src="/logout-modal.js"></script>
+
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const closeBtn = document.getElementById("closeBtn");
+  const nav = document.getElementById("mainNav");
+
+  menuBtn.onclick = () => nav.classList.add("show");
+  closeBtn.onclick = () => nav.classList.remove("show");
+</script>
+
+
+</body>
+</html>

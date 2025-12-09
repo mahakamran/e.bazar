@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>E.BAZAR — Edit Product</title>
+  <link rel="stylesheet" href="/admin.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{--bg:#f6f7fb;--card:#fff;--muted:#687182;--accent:#FFD700;--dark:#0b1220}
+    *{box-sizing:border-box}
+    body{font-family:Poppins;margin:0;background:var(--bg);color:var(--dark)}
+    .app{display:flex;min-height:100vh}
+     .nav a{text-decoration:none;color:#c9d2df;padding:10px;border-radius:8px;display:flex;align-items:center;gap:10px}
+    .nav a.active,.nav a:hover{background:rgba(255,215,0,0.12);color:var(--accent)}
+    .sidebar{width:260px;background:#0f1724;color:#fff;padding:22px 18px}
+    .nav a.active,.nav a:hover{background:rgba(255,215,0,0.12);color:var(--accent)}
+
+    .main{flex:1;padding:25px 30px}
+    .card{background:var(--card);padding:22px;border-radius:12px;box-shadow:0 6px 18px rgba(11,17,32,0.04)}
+
+    .form label{font-weight:600;margin-top:10px;display:block}
+    .form input,.form textarea{
+      width:100%;padding:12px;margin-top:6px;
+      border:1px solid #ddd;border-radius:10px;font-size:15px;
+    }
+    textarea{height:120px}
+
+    .btn-submit{
+      background:var(--accent);
+      padding:12px 20px;
+      border:none;border-radius:10px;
+      font-weight:700;
+      cursor:pointer;
+      margin-top:15px;
+      width:100%;
+    }
+
+    .preview-img{
+      width:120px;
+      height:120px;
+      object-fit:contain;
+      border:1px solid #ddd;
+      border-radius:10px;
+      padding:6px;
+      margin-top:10px;
+      background:#fff;
+    }
+    /* ===== Responsive Navbar / Sidebar Toggle ===== */
+.topbar{
+  display:none;
+  background:#fff;
+  padding:12px 18px;
+  border-bottom:1px solid #eee;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.menu-btn{
+  font-size:24px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:#0b1220;
+}
+
+.close-btn{
+  display:none;
+  font-size:22px;
+  background:none;
+  border:none;
+  color:#fff;
+  margin-bottom:10px;
+  cursor:pointer;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  display:none;
+  z-index:998;
+}
+
+.overlay.show{display:block}
+
+/* Mobile */
+@media(max-width:900px){
+  .sidebar{
+    position:fixed;
+    top:0;
+    left:-280px;
+    height:100vh;
+    z-index:999;
+    transition:0.3s ease;
+  }
+
+  .sidebar.show{
+    left:0;
+  }
+
+  .topbar{
+    display:flex;
+  }
+
+  .close-btn{
+    display:block;
+    margin-left: 190px;
+  }
+}
+
+  </style>
+
+<script>
+function previewImage() {
+  const url = document.getElementById("image").value;
+  document.getElementById("preview").src = url;
+}
+</script>
+
+</head>
+
+<body onload="previewImage()">
+  <!-- Mobile Top Bar -->
+<div class="topbar">
+  <button class="menu-btn" id="openMenu">☰</button>
+  <strong>E.BAZAR Admin</strong>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <button class="close-btn" id="closeMenu">✖</button>
+
+    <a class="brand"><img src="https://via.placeholder.com/44"><div class="title">E.BAZAR Admin</div></a>
+
+   <nav class="nav">
+      <a href="/admin/dashboard"><span class="icon">🏠</span> Dashboard</a>
+      <a href="/admin/products" class="active"><span class="icon">📦</span> Products</a>
+      <a href="/admin/add-product"><span class="icon">➕</span> Add Product</a>
+      <a href="/admin/orders"><span class="icon">🧾</span> Orders</a>
+      <a href="/admin/users"><span class="icon">👥</span> Users</a>
+      <a href="/admin/categories"><span class="icon">📂</span> Categories</a>
+      <a href="/admin/settings"><span class="icon">⚙️</span> Settings</a>
+    </nav>
+  </aside>
+
+  <div class="main-content" style="width: 600px;margin-left: 0px;">
+    <h1 class="page-title">Edit Product</h1>
+
+    <form action="/admin/edit-product/<%= product._id %>" 
+          method="POST" enctype="multipart/form-data" class="form-card">
+
+        <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" name="name" value="<%= product.name %>" required>
+        </div>
+
+        <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" name="price" value="<%= product.price %>" required>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" required><%= product.description %></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <input type="text" name="category" value="<%= product.category %>" required>
+        </div>
+
+        <div class="form-group">
+            <label>Current Image</label>
+            <img src="<%= product.image %>" width="120" style="border-radius:10px;">
+        </div>
+
+        <div class="form-group">
+            <label>Upload New Image (optional)</label>
+            <input type="file" name="image" accept="image/*">
+        </div>
+
+        <button type="submit" class="btn-primary">Update Product</button>
+    </form>
+</div>
+
+
+</div>
+<script>
+const openBtn = document.getElementById("openMenu");
+const closeBtn = document.getElementById("closeMenu");
+const sidebar = document.querySelector(".sidebar");
+const overlay = document.getElementById("overlay");
+
+openBtn.onclick = () => {
+  sidebar.classList.add("show");
+  overlay.classList.add("show");
+};
+
+closeBtn.onclick = () => {
+  sidebar.classList.remove("show");
+  overlay.classList.remove("show");
+};
+
+overlay.onclick = () => {
+  sidebar.classList.remove("show");
+  overlay.classList.remove("show");
+};
+</script>
+
+</body>
+</html>

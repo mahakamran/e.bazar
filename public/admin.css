@@ -1,0 +1,116 @@
+/* SETTINGS PAGE */
+.settings-section {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 25px;
+}
+
+.settings-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+}
+
+.settings-card h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 7px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 15px;
+}
+
+.save-btn {
+    width: 100%;
+    background: #6a5af9;
+    color: white;
+    border: none;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.save-btn:hover {
+    background: #5748e2;
+}
+.main-content {
+    padding: 25px;
+    margin-left: 260px; /* adjust for sidebar width */
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.form-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    max-width: 550px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+textarea {
+    height: 120px;
+    resize: none;
+}
+
+.btn-primary {
+    margin-top: 10px;
+    padding: 12px 25px;
+    border: none;
+    background: rgb(238, 174, 0);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: rgb(238, 155, 0);
+}

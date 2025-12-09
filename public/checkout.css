@@ -1,0 +1,184 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#f5f5f5;
+}
+
+/* NAVBAR */
+.navbar{
+  background:#fff;
+  padding:18px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+}
+.logo{
+  font-size:26px;
+  font-weight:700;
+}
+.logo span{
+  color:#d40000;
+}
+.nav-links a{
+  margin-left:15px;
+  text-decoration:none;
+  color:#333;
+}
+
+/* CHECKOUT CONTAINER */
+.checkout-container{
+  display:flex;
+  gap:40px;
+  padding:40px 60px;
+}
+
+/* FORM */
+.checkout-form{
+  flex:2;
+  background:#fff;
+  padding:30px;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+.checkout-form h2{
+  margin-bottom:25px;
+}
+.input-group{
+  margin-bottom:20px;
+}
+.input-group label{
+  display:block;
+  font-weight:500;
+  margin-bottom:6px;
+}
+.input-group input,
+.input-group textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-size:14px;
+}
+textarea{
+  resize:none;
+  height:90px;
+}
+
+/* COD */
+.cod-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#fff6f6;
+  border:1px solid #ffcccc;
+  padding:12px;
+  border-radius:8px;
+  margin:20px 0;
+  font-weight:600;
+  color:#d40000;
+}
+
+/* BUTTON */
+.place-order-btn{
+  width:100%;
+  padding:14px;
+  background:#d40000;
+  color:white;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* SUMMARY */
+.checkout-summary{
+  flex:1;
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+  height:fit-content;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+.checkout-summary h2{
+  margin-bottom:20px;
+}
+.summary-item{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+  font-size:14px;
+}
+/* ----------------------------
+   RESPONSIVE CHECKOUT PAGE
+-----------------------------*/
+
+/* Tablet Screens */
+@media (max-width: 992px){
+  .checkout-container{
+    flex-direction: column;
+    padding:30px 25px;
+  }
+
+  .checkout-form,
+  .checkout-summary{
+    width:100%;
+  }
+}
+
+/* Mobile Screens */
+@media (max-width: 600px){
+  .checkout-container{
+    padding:20px 15px;
+    gap:20px;
+  }
+
+  .checkout-form{
+    padding:20px;
+  }
+
+  .checkout-summary{
+    padding:20px;
+  }
+
+  .checkout-form h2,
+  .checkout-summary h2{
+    font-size:20px;
+  }
+
+  .input-group label{
+    font-size:14px;
+  }
+
+  .input-group input,
+  .input-group textarea{
+    font-size:14px;
+    padding:10px;
+  }
+
+  .place-order-btn{
+    font-size:15px;
+    padding:12px;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 400px){
+  .checkout-form{
+    padding:15px;
+  }
+
+  .checkout-summary{
+    padding:15px;
+  }
+
+  .summary-item{
+    font-size:13px;
+  }
+}

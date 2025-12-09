@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Order</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body{
+      font-family:Poppins;
+      background:#f6f7fb;
+      padding:30px;
+    }
+    .box{
+      max-width:900px;
+      margin:auto;
+      background:#fff;
+      padding:25px;
+      border-radius:12px;
+      box-shadow:0 5px 20px rgba(0,0,0,0.05);
+    }
+    h2{margin-top:0}
+    .info{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:20px}
+    .row{font-size:14px}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:12px;border-bottom:1px solid #eee;font-size:14px;text-align:left}
+    th{background:#fafafa}
+    .total{font-weight:700;text-align:right;margin-top:15px;font-size:18px}
+    .back{
+      display:inline-block;
+      margin-top:15px;
+      text-decoration:none;
+      background:#000;
+      color:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      font-size:13px;
+    }
+    body{
+  font-family:Poppins;
+  background:#f6f7fb;
+  padding:10px;
+}
+
+/* Main Card */
+.box{
+  max-width:900px;
+  margin:auto;
+  background:#fff;
+  padding:18px;
+  border-radius:16px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.05);
+}
+
+/* Title */
+h2{
+  margin:0 0 15px;
+  font-size:22px;
+}
+
+/* Info Grid */
+.info{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-bottom:20px;
+}
+
+/* Info Rows */
+.row{
+  font-size:14px;
+  word-break:break-word;
+}
+
+/* Status Dropdown */
+select{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  margin-top:6px;
+}
+
+/* Update Button */
+button{
+  width:100%;
+  font-size:14px;
+}
+
+/* Table Wrapper for Mobile Scroll */
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+}
+
+/* Table */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+
+th,td{
+  padding:10px;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+
+th{
+  background:#fafafa;
+}
+
+/* Total */
+.total{
+  font-weight:700;
+  text-align:right;
+  margin-top:15px;
+  font-size:18px;
+}
+
+/* Back Button */
+.back{
+  display:block;
+  text-align:center;
+  margin-top:18px;
+  background:#000;
+  color:#fff;
+  padding:12px;
+  border-radius:12px;
+  font-size:14px;
+  text-decoration:none;
+}
+
+/* ===== Responsive Adjustments ===== */
+
+@media(max-width:768px){
+
+  .info{
+    grid-template-columns:1fr;
+  }
+
+  h2{
+    font-size:20px;
+    text-align:center;
+  }
+
+  .row{
+    font-size:13px;
+  }
+
+  table{
+    font-size:13px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="box">
+
+  <h2>Order Details</h2>
+
+  <div class="info">
+    <div class="row"><strong>Order ID:</strong> #<%= order._id.toString().slice(-6) %></div>
+    <div class="row"><strong>Name:</strong> <%= order.name %></div>
+    <div class="row"><strong>Phone:</strong> <%= order.phone %></div>
+    <div class="row"><strong>City:</strong> <%= order.city %></div>
+    <div class="row"><strong>Address:</strong> <%= order.address %></div>
+    <div class="row">
+  <strong>Status:</strong>
+
+  <form action="/admin/orders/update-status/<%= order._id %>" method="POST" style="margin-top:6px;">
+    <select name="status" style="padding:6px;border-radius:6px;">
+      <option value="Pending" <%= order.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+      <option value="Approved" <%= order.status === 'Approved' ? 'selected' : '' %>>Approved</option>
+      <option value="Out for Delivery" <%= order.status === 'Out for Delivery' ? 'selected' : '' %>>Out for Delivery</option>
+      <option value="Completed" <%= order.status === 'Completed' ? 'selected' : '' %>>Completed</option>
+      <option value="Cancelled" <%= order.status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+    </select>
+
+    <br><br>
+    <button
+      style="background:#000;color:#fff;padding:8px 16px;border:none;border-radius:6px;cursor:pointer;">
+      Update Status
+    </button>
+  </form>
+</div>
+
+    <div class="row"><strong>Payment:</strong> <%= order.paymentMethod %></div>
+    <div class="row"><strong>Date:</strong> <%= new Date(order.createdAt).toDateString() %></div>
+  </div>
+
+ <div class="table-wrap">
+   <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Size</th>
+        <th>Color</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% order.items.forEach(item => { %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.size || '-' %></td>
+          <td><%= item.color || '-' %></td>
+          <td><%= item.qty %></td>
+          <td>$<%= item.price.toFixed(2) %></td>
+          <td>$<%= (item.price * item.qty).toFixed(2) %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+ </div>
+
+  <div class="total">Grand Total: $<%= order.totalAmount.toFixed(2) %></div>
+
+  <a href="/admin/orders" class="back">← Back to Orders</a>
+
+</div>
+
+</body>
+</html>

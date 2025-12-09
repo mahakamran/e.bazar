@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>E.BAZAR — Admin Products</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{--bg:#f6f7fb;--card:#fff;--muted:#687182;--accent:#FFD700;--dark:#0b1220}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Poppins;background:var(--bg);color:var(--dark)}
+    .app{display:flex;min-height:100vh}
+
+    /* SIDEBAR */
+    .sidebar{
+      width:260px;background:#0f1724;color:#fff;
+      padding:22px 18px;display:flex;flex-direction:column;gap:20px;
+      transition:0.3s ease;
+    }
+
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+    .brand img{width:44px;height:44px;border-radius:8px;object-fit:cover}
+    .title{font-weight:700;font-size:18px}
+
+    .nav a{text-decoration:none;color:#c9d2df;padding:10px	;border-radius:8px;display:flex;align-items:center;gap:10px;
+    }
+    .nav a.active,.nav a:hover{
+      background:rgba(255,215,0,0.12);color:var(--accent)
+    }
+
+    /* Close Button */
+    .close-menu{
+      display:none;background:none;border:none;font-size:22px;
+      color:#fff;align-self:flex-end;cursor:pointer;
+    }
+
+    /* Overlay */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.45);
+      display:none;
+      z-index:998;
+    }
+    .overlay.show{display:block;}
+
+    /* MAIN */
+    .main{flex:1;padding:18px 28px}
+
+    .topbar{
+      display:flex;justify-content:space-between;
+      align-items:center;margin-bottom:20px;
+    }
+
+    .menu-toggle{
+      display:none;background:none;border:none;
+      font-size:24px;cursor:pointer;
+    }
+
+    /* TABLE */
+    .table-wrap{
+      width:100%;
+      overflow-x:auto;
+      background:#fff;
+      border-radius:14px;
+      box-shadow:0 5px 25px rgba(0,0,0,0.03);
+      padding:10px 10px 16px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:650px;
+    }
+
+    th,td{
+      padding:12px 10px;
+      text-align:left;
+      border-bottom:1px solid #f0f2f6;
+      font-size:14px;
+    }
+
+    th{color:#677}
+
+    .img-full{
+      width:60px;height:60px;object-fit:contain;
+    }
+
+    .btn{
+      padding:6px 14px;border:none;border-radius:8px;
+      font-size:13px;cursor:pointer;font-weight:600;
+    }
+
+    .btn-edit{background:#ffe56c}
+    .btn-edit:hover{background:#ffdf54}
+
+    .btn-delete{background:#ffb3b3;color:#700}
+    .btn-delete:hover{background:#ff9393}
+
+    .btn-add{
+      background:var(--accent);
+      padding:10px 16px;border-radius:8px;
+      font-weight:600;border:none;cursor:pointer;
+      margin-bottom:12px;
+    }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width:1000px){
+      .sidebar{
+        position:fixed;
+        top:0;left:-270px;height:100vh;z-index:999;
+      }
+      .sidebar.show{left:0;}
+      .menu-toggle{display:block}
+    }
+
+    @media (max-width:650px){
+      .main{padding:16px 12px}
+      .table-wrap{border-radius:10px}
+      .close-menu{display:block}
+    }
+    /* ============ MOBILE CARD SYSTEM ============ */
+.mobile-cards{
+  display:none;
+}
+
+@media (max-width:750px){
+
+  /* Hide table on mobile */
+  .table-wrap{
+    display:none;
+  }
+
+  /* Show cards */
+  .mobile-cards{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+
+  .product-card{
+    background:#fff;
+    padding:16px;
+    border-radius:14px;
+    box-shadow:0 5px 18px rgba(0,0,0,0.05);
+  }
+
+  .card-top{
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+
+  .card-img{
+    width:70px;
+    height:70px;
+    object-fit:contain;
+    border-radius:12px;
+    background:#f6f7fb;
+    padding:6px;
+  }
+
+  .product-card h3{
+    font-size:15px;
+    margin-bottom:2px;
+  }
+
+  .cat{
+    font-size:13px;
+    color:#777;
+  }
+
+  .price{
+    font-size:15px;
+    color:#111;
+  }
+
+  .card-actions{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+  }
+
+  .card-actions .btn{
+    flex:1;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <button class="close-menu" id="closeSidebar">✖</button>
+
+    <a class="brand" href="#">
+      <img src="/image/pic11.png" alt="" style="background-color: white;">
+      <div class="title">E.BAZAR Admin</div>
+    </a>
+
+    <nav class="nav">
+      <a href="/admin/dashboard">🏠 Dashboard</a>
+      <a href="/admin/products" class="active">📦 Products</a>
+      <a href="/admin/add-product">➕ Add Product</a>
+      <a href="/admin/orders">🧾 Orders</a>
+      <a href="/admin/users">👥 Users</a>
+      <a href="/admin/categories">📂 Categories</a>
+      <a href="/admin/settings">⚙️ Settings</a>
+    </nav>
+
+    <div style="margin-top:auto;font-size:13px;color:#9aa6b8">
+      Logged in as <strong>Admin</strong>
+    </div>
+  </aside>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="topbar">
+      <button id="menuBtn" class="menu-toggle">☰</button>
+      <h2>Products</h2>
+    </div>
+
+    <a href="/admin/add-product">
+      <button class="btn-add">+ Add New Product</button>
+    </a>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th style="width:160px">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% products.forEach(product => { %>
+          <tr>
+            <td><img src="<%= product.image %>" class="img-full"></td>
+            <td><%= product.name %></td>
+            <td><%= product.category %></td>
+            <td>$<%= product.price %></td>
+            <td>
+              <a href="/admin/edit/<%= product._id %>">
+                <button class="btn btn-edit">Edit</button>
+              </a>
+              <a href="/admin/delete/<%= product._id %>" onclick="return confirm('Delete this product?')">
+                <button class="btn btn-delete">Delete</button>
+              </a>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+
+      </table>
+    </div>
+<!-- ✅ MOBILE CARD VIEW (only for small screens) -->
+<div class="mobile-cards">
+
+  <% products.forEach(product => { %>
+
+    <div class="product-card">
+      <div class="card-top">
+        <img src="<%= product.image %>" class="card-img">
+        <div>
+          <h3><%= product.name %></h3>
+          <p class="cat"><%= product.category %></p>
+          <strong class="price">$<%= product.price %></strong>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <a href="/admin/edit/<%= product._id %>">
+          <button class="btn btn-edit">Edit</button>
+        </a>
+
+        <a href="/admin/delete/<%= product._id %>" onclick="return confirm('Delete this product?')">
+          <button class="btn btn-delete">Delete</button>
+        </a>
+      </div>
+    </div>
+
+  <% }) %>
+
+</div>
+
+  </main>
+</div>
+
+<script>
+  const menuBtn  = document.getElementById("menuBtn");
+  const sidebar  = document.getElementById("sidebar");
+  const closeBtn = document.getElementById("closeSidebar");
+  const overlay  = document.getElementById("overlay");
+
+  menuBtn.onclick = () => {
+    sidebar.classList.add("show");
+    overlay.classList.add("show");
+  };
+
+  closeBtn.onclick = () => {
+    sidebar.classList.remove("show");
+    overlay.classList.remove("show");
+  };
+
+  overlay.onclick = () => {
+    sidebar.classList.remove("show");
+    overlay.classList.remove("show");
+  };
+</script>
+
+</body>
+</html>

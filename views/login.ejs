@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MahaShop</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <div class="login-container">
+
+        <div class="login-box">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Login to continue shopping</p>
+
+            <!-- BACKEND READY FORM -->
+            <form action="/login" method="POST">
+
+                <label>Email</label>
+                <input type="email" name="email" placeholder="example@gmail.com" required>
+
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+
+                <button class="login-btn">Login</button>
+
+                <p class="signup-text">
+                    Don't have an account?
+                    <a href="/">Sign up</a>
+                </p>
+
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

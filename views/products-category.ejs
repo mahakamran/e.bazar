@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MahaShop — <%= category %></title>
+
+    <!-- <link rel="stylesheet" href="/products.css"> -->
+    <link rel="stylesheet" href="/style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+
+    <!-- LOGO -->
+    <a class="brand" href="/dashboard">
+      <img src="/image/pic11.png" id="picsate">
+    </a>
+
+  
+
+    <!-- NAVIGATION -->
+    <nav class="main-nav" id="mainNav">
+
+      <button class="close-menu" id="closeBtn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <a href="/dashboard">Home</a>
+      <a href="/products">Shop</a>
+      <a href="/products/clothes">Clothes</a>
+      <a href="/products/shoes">Shoes</a>
+      <a href="/products/watches">Watches</a>
+      <a href="/my-orders">📦 My Orders</a>
+      <a href="/logout" class="logout-link">🚪 Logout</a>
+
+    </nav>
+
+    <!-- CART + USER -->
+    <div class="nav-actions">
+      <span class="greeting" style="font-weight: bold;"><span style="color: orangered;font-weight: bold;">Hi,</span> <%= user.fullName %></span>
+      <a href="/cart"><i class="fa-solid fa-cart-shopping" id="imp"></i></a>
+    </div>
+  <!-- MENU ICON -->
+    <button class="menu-toggle" id="menuBtn">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<section class="page-header">
+    <h1><%= category.charAt(0).toUpperCase() + category.slice(1) %> Collection</h1>
+    <p>Explore premium products</p>
+</section>
+
+<section class="shop-container">
+
+    <aside class="filters">
+        <h3>Filters</h3>
+        <div class="filter-box">
+            <h4>Category</h4>
+            <ul>
+                <li><a href="/products">All</a></li>
+
+                <% categories.forEach(cat => { %>
+                    <li>
+                        <a href="/products/<%= cat.name.toLowerCase() %>"
+                           class="<%= cat.name.toLowerCase() === category ? 'active' : '' %>">
+                            <%= cat.name %>
+                        </a>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+    </aside>
+
+    <div class="products-grid">
+        <% products.forEach(product => { %>
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="<%= product.image %>" alt="<%= product.name %>">
+                </div>
+
+                <h3><%= product.name %></h3>
+                <p>$<%= product.price %></p>
+                <a href="/product/<%= product._id %>" class="view-btn">View Details</a>
+            </div>
+        <% }) %>
+
+        <% if (products.length === 0) { %>
+            <h2 style="text-align:center; width:100%; color:gray;">
+                No products found in this category.
+            </h2>
+        <% } %>
+    </div>
+
+</section>
+<script src="/logout-modal.js"></script>
+
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const closeBtn = document.getElementById("closeBtn");
+  const nav = document.getElementById("mainNav");
+
+  menuBtn.onclick = () => nav.classList.add("show");
+  closeBtn.onclick = () => nav.classList.remove("show");
+</script>
+</body>
+</html>

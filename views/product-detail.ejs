@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= product.name %> — MahaShop</title>
+
+  <link rel="stylesheet" href="/product-detail.css">
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+       <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="site-header">
+  <div class="container header-inner">
+
+    <!-- LOGO -->
+    <a class="brand" href="/dashboard">
+      <img src="/image/pic11.png" id="picsate">
+    </a>
+
+  
+
+    <!-- NAVIGATION -->
+    <nav class="main-nav" id="mainNav">
+
+      <button class="close-menu" id="closeBtn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <a href="/dashboard">Home</a>
+      <a href="/products">Shop</a>
+      <a href="/products/clothes">Clothes</a>
+      <a href="/products/shoes">Shoes</a>
+      <a href="/products/watches">Watches</a>
+      <a href="/my-orders">📦 My Orders</a>
+      <a href="/logout" class="logout-link">🚪 Logout</a>
+
+    </nav>
+
+    <!-- CART + USER -->
+    <div class="nav-actions">
+      <span class="greeting" style="font-weight: bold;"><span style="color: orangered;font-weight: bold;">Hi,</span> <%= user.fullName %></span>
+      <a href="/cart"><i class="fa-solid fa-cart-shopping" id="imp"></i></a>
+    </div>
+  <!-- MENU ICON -->
+    <button class="menu-toggle" id="menuBtn">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<!-- PRODUCT DETAIL SECTION -->
+<section class="detail-section">
+
+  <!-- LEFT IMAGE -->
+  <div class="product-image">
+    <img id="mainProductImage" src="<%= product.image %>" alt="">
+  </div>
+
+  <!-- RIGHT CONTENT -->
+  <div class="product-info">
+
+    <h2 style="padding-top: 50px;"><%= product.name %></h2>
+
+    <!-- PRICE -->
+    <p id="priceBox" style="font-weight: bold;font-size: 30px;color: brown;">$<%= product.price %></p>
+
+    <p class="desc"><%= product.description %></p>
+
+   <% if(product.variants && product.variants.length > 0){ %>
+<div style="margin-top:30px;">
+  <h4>Select Size & Color</h4>
+
+  <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:15px;">
+    <% product.variants.forEach(v => { %>
+      <div class="variant-option"
+        style="
+          border:2px solid #ddd;
+          padding:10px 14px;
+          border-radius:10px;
+          cursor:pointer;
+          display:flex;
+          flex-direction:column;
+          gap:6px;
+          align-items:center;
+        "
+        data-image="<%= v.image %>"
+        data-price="<%= v.price %>">
+
+        <div style="font-weight:600;"><%= v.size %></div>
+
+        <div style="
+          background:<%= v.colorCode %>;
+          width:28px;height:28px;
+          border-radius:50%;
+          border:1px solid #ccc;
+        " title="<%= v.colorName %>"></div>
+
+      </div>
+    <% }) %>
+  </div>
+</div>
+<% } %>
+
+
+
+
+
+    
+
+
+    
+    <!-- ADD TO CART BUTTON -->
+    <button id="addToCartBtn"
+  style="background-color: rgb(204, 5, 5);color: white;border: none;width: 150px;height: 45px;font-weight: bold;border-radius: 5px;margin-top: 50px;">
+  Add to Cart
+</button>
+
+  </div>
+</section>
+
+<!-- RELATED PRODUCTS -->
+<section class="related">
+  <h3>Related Products</h3>
+
+  <div class="related-grid">
+    <% related.forEach(item => { %>
+      <div class="product-card">
+        <img src="<%= item.image %>" alt="">
+        <h4><%= item.name %></h4>
+        <p>$<%= item.price %></p>
+        <a href="/product/<%= item._id %>">View</a>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+
+ <footer class="premium-footer">
+  <div class="footer-grid container">
+  
+    <div>
+      <h3>E.BAZAR</h3>
+      <p>Luxury fashion store — trusted by thousands</p>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <a href="#">Home</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <div>
+      <h4>Customer Care</h4>
+      <a href="#">Shipping Policy</a>
+      <a href="#">Refund Policy</a>
+      <a href="#">Support</a>
+    </div>
+
+    <div>
+      <h4>Follow Us</h4>
+      <i class="fab fa-facebook"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-twitter"></i>
+    </div>
+
+  </div>
+
+  <p class="footer-copy">© 2025 E.BAZAR — All rights reserved</p>
+</footer>
+
+
+<!-- SCRIPT -->
+<script>
+const sizeOptions = document.querySelectorAll(".size-option");
+const sizeInput   = document.getElementById("selectedSize");
+const priceInput  = document.getElementById("selectedPrice");
+const mainImage   = document.getElementById("mainProductImage");
+const priceBox    = document.getElementById("priceBox");
+
+sizeOptions.forEach(option => {
+  option.addEventListener("click", () => {
+
+    // remove active class
+    sizeOptions.forEach(o => o.classList.remove("active"));
+    option.classList.add("active");
+
+    // get data
+    const size  = option.innerText;
+    const price = option.getAttribute("data-price");
+    const image = option.getAttribute("data-image");
+
+    // set hidden values
+    sizeInput.value  = size;
+    priceInput.value = price;
+
+    // update price
+    if (price) {
+      priceBox.innerText = "$" + price;
+    }
+
+    // update image
+    if (image) {
+      mainImage.src = image;
+    }
+  });
+});
+
+</script>
+
+<script>
+  document.getElementById("addToCartBtn").addEventListener("click", () => {
+  const btn = document.getElementById("addToCartBtn");
+  btn.innerText = "Added ✅";
+  btn.style.background = "#22c55e";
+  setTimeout(() => {
+    btn.innerText = "Add to Cart";
+    btn.style.background = "linear-gradient(135deg, #FFD700, #ffae00)";
+  }, 1500);
+});
+
+</script>
+<script>
+  const colorOptions = document.querySelectorAll(".color-option");
+const colorInput = document.getElementById("selectedColor");
+
+colorOptions.forEach(option => {
+  option.addEventListener("click", () => {
+    colorOptions.forEach(o => o.classList.remove("active"));
+    option.classList.add("active");
+
+    const image = option.getAttribute("data-image");
+    const price = option.getAttribute("data-price");
+    const color = option.title;
+
+    colorInput.value = color;
+
+    if (price) priceBox.innerText = "$" + price;
+    if (image) mainImage.src = image;
+  });
+});
+
+</script>
+<script>
+const variants = document.querySelectorAll(".variant-option");
+
+variants.forEach(opt => {
+  opt.addEventListener("click", () => {
+
+    // Active effect
+    variants.forEach(o => o.style.border = "2px solid #ddd");
+    opt.style.border = "2px solid #FFD700";
+
+    const image = opt.getAttribute("data-image");
+    const price = opt.getAttribute("data-price");
+
+    if (price) priceBox.innerText = "$" + price;
+    if (image) mainImage.src = image;
+  });
+});
+</script>
+
+
+
+<script>
+document.getElementById("addToCartBtn").addEventListener("click", async () => {
+  const activeVariant = document.querySelector(".variant-option[style*='FFD700']");
+  const price = document.getElementById("priceBox").innerText.replace("$", "");
+
+  let size = "";
+  let color = "";
+  let image = document.getElementById("mainProductImage").src;
+
+  if(activeVariant){
+    size = activeVariant.querySelector("div").innerText;
+  }
+
+  const res = await fetch("/add-to-cart", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      productId: "<%= product._id %>",
+      name: "<%= product.name %>",
+      price: price,
+      image: image,
+      size: size,
+      color: color,
+      qty: 1
+    })
+  });
+
+  if(res.ok){
+    const btn = document.getElementById("addToCartBtn");
+    btn.innerText = "Added ✅";
+    btn.style.background = "#22c55e";
+    setTimeout(() => {
+      btn.innerText = "Add to Cart";
+      btn.style.background = "rgb(204, 5, 5)";
+    }, 1500);
+  }
+});
+</script>
+<script>
+let selectedVariant = null;
+
+document.querySelectorAll(".variant-option").forEach(opt => {
+  opt.addEventListener("click", () => {
+    document.querySelectorAll(".variant-option").forEach(o => o.classList.remove("active"));
+    opt.classList.add("active");
+    selectedVariant = opt;
+  });
+});
+
+document.getElementById("addToCartBtn").addEventListener("click", async () => {
+  const price = document.getElementById("priceBox").innerText.replace("$", "");
+  const image = document.getElementById("mainProductImage").src;
+
+  let size = "";
+  let color = "";
+
+  if (selectedVariant) {
+    size = selectedVariant.querySelector("div").innerText;
+    color = selectedVariant.querySelector("div[title]")?.title || "";
+  }
+
+  const res = await fetch("/add-to-cart", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      productId: "<%= product._id %>",
+      name: "<%= product.name %>",
+      price: Number(price),
+      image,
+      size,
+      color,
+      qty: 1
+    })
+  });
+
+  if (res.ok) {
+    alert("Added to cart ✅");
+  } else {
+    alert("Failed to add to cart ❌");
+  }
+});
+</script>
+<script src="/logout-modal.js"></script>
+
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const closeBtn = document.getElementById("closeBtn");
+  const nav = document.getElementById("mainNav");
+
+  menuBtn.onclick = () => nav.classList.add("show");
+  closeBtn.onclick = () => nav.classList.remove("show");
+</script>
+</body>
+</html>
+
+

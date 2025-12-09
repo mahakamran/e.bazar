@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>E.BAZAR — Add Product</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f6f7fb;
+  --card:#fff;
+  --muted:#687182;
+  --accent:#FFD700;
+  --dark:#0b1220;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins'}
+
+body{background:var(--bg);color:var(--dark)}
+.app{display:flex;min-height:100vh}
+
+/* sidebar – unchanged */
+.sidebar{
+  width:260px;
+  background:#0f1724;
+  color:#fff;
+  padding:22px 18px;
+}
+.nav a{
+  text-decoration:none;
+  color:#c9d2df;
+  padding:10px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.nav a:hover,.nav a.active{
+  background:rgba(255,215,0,0.12);
+  color:var(--accent);
+}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:25px}
+.brand img{width:44px;height:44px;border-radius:10px}
+
+/* main */
+.main{ flex:1; padding:30px 40px }
+
+/* card */
+.card{
+  max-width:750px;
+  background:var(--card);
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05)
+}
+
+.page-title{ font-size:24px;font-weight:700;margin-bottom:20px }
+
+.form-group{ margin-bottom:16px }
+.form-group label{ font-weight:600;font-size:14px }
+
+.form-group input,
+.form-group textarea{
+  width:100%;
+  padding:12px 15px;
+  margin-top:6px;
+  border:1px solid #e2e6ed;
+  border-radius:12px;
+  font-size:14px;
+}
+
+textarea{ height:120px;resize:none }
+
+.checkbox{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  font-weight:500;
+}
+
+.size-box{
+  margin-top:15px;
+  padding:15px;
+  border:1px dashed #d8dce2;
+  border-radius:12px;
+  display:none
+}
+
+.size-row{
+  display:flex;
+  gap:10px;
+  margin-bottom:10px;
+  align-items:center;
+}
+
+.size-row input[type="color"]{
+  width:50px;
+  height:45px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.size-row input[type="file"]{
+  border:none;
+  padding:8px;
+}
+
+.btn-add-size{
+  background:#fff6c8;
+  border:1px solid #ffdd6c;
+  padding:8px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.btn-submit{
+  width:100%;
+  background:var(--accent);
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:20px;
+}
+
+.btn-submit:hover{background:#f2d100}
+/* ================= RESPONSIVE PATCH (NO DESIGN CHANGE) ================= */
+
+/* mobile top bar */
+.mobile-bar{
+  display:none;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.menu-btn{
+  display:none;
+  font-size:22px;
+  background:none;
+  border:none;
+  cursor:pointer;
+}
+
+/* overlay */
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,36,0.45);
+  z-index:8;
+}
+
+/* responsive sidebar */
+@media (max-width:900px){
+
+  .app{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    left:-280px;
+    height:100vh;
+    z-index:10;
+    transition:0.25s ease;
+  }
+
+  .sidebar.show{
+    left:0;
+  }
+
+  .overlay.show{
+    display:block;
+  }
+
+  .main{
+    padding:20px;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .mobile-bar{
+    display:flex;
+  }
+
+  .card{
+    max-width:100%;
+    padding:22px;
+    border-radius:16px;
+  }
+
+  .size-row{
+    flex-wrap:wrap;
+  }
+
+  .size-row input,
+  .size-row button{
+    flex:1 1 48%;
+  }
+
+  .size-row input[type="color"]{
+    flex:0 0 48%;
+  }
+}
+
+@media (max-width:500px){
+  .size-row input,
+  .size-row button{
+    flex:1 1 100%;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <img src="/image/pic11.png" style="background-color: white;">
+      <strong>E.BAZAR Admin</strong>
+    </div>
+  <nav class="nav">
+    <a href="/admin/dashboard" class="active"><span class="icon">🏠</span> Dashboard</a>
+
+    <a href="/admin/products"><span class="icon">📦</span> Products</a>
+
+    <a href="/admin/add-product"><span class="icon">➕</span> Add Product</a>
+
+    <a href="/admin/orders"><span class="icon">🧾</span> Orders</a>
+
+    <a href="/admin/users"><span class="icon">👥</span> Users</a>
+
+    <a href="/admin/categories"><span class="icon">📂</span> Categories</a>
+
+    <a href="/admin/settings"><span class="icon">⚙️</span> Settings</a>
+</nav>
+  </aside>
+  <div class="overlay" id="overlay"></div>
+
+
+  <!-- MAIN FORM -->
+  <main class="main">
+    <button class="menu-btn" id="menuBtn">☰</button>
+    <div class="card">
+
+      <h2 class="page-title">Add New Product</h2>
+
+      <form action="/admin/add-product" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" name="name" placeholder="Nike Air Max" required>
+        </div>
+
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" name="price" placeholder="99" required>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description" placeholder="Product details…" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <input type="text" name="category" placeholder="shoes / clothes / watches" required>
+        </div>
+<!-- VARIANT COMBO -->
+<div class="form-group checkbox">
+  <input type="checkbox" id="hasVariants" name="hasVariants">
+  <label for="hasVariants">This product has size + color combo?</label>
+</div>
+
+<div class="size-box" id="variantsBox">
+
+  <label style="font-weight:600;margin-bottom:8px;display:block">
+    Size + Color + Price + Image
+  </label>
+
+  <div class="size-row">
+    <input type="text" name="vSize[]" placeholder="Size (S / 42)">
+    <input type="text" name="vColorName[]" placeholder="Color Name (Red)">
+    <input type="color" name="vColorCode[]">
+    <input type="number" name="vPrice[]" placeholder="Price">
+    <input type="file" name="vImage">
+  </div>
+
+</div>
+
+<button type="button" class="btn-add-size" onclick="addMoreVariants()">+ Add More Combos</button>
+
+
+        <div class="form-group" style="margin-top:15px">
+          <label>Main Product Image</label>
+          <input type="file" name="image" required>
+        </div>
+
+        <button type="submit" class="btn-submit">Add Product</button>
+
+      </form>
+
+    </div>
+  </main>
+
+</div>
+
+<!-- JS -->
+<script>
+function addMoreSizes() {
+  const div = document.createElement("div");
+  div.classList.add("size-row");
+  div.innerHTML = `
+    <input type="text" name="sizeName[]" placeholder="Size (S/M/L/42)" required>
+    <input type="number" name="sizePrice[]" placeholder="Price" required>
+    <input type="file" name="sizeImage">
+  `;
+  document.getElementById("sizesBox").appendChild(div);
+}
+
+document.getElementById("hasSize").addEventListener("change", function () {
+  document.getElementById("sizesBox").style.display = this.checked ? "block" : "none";
+});
+</script>
+
+<script>
+document.getElementById("hasColor").addEventListener("change", function () {
+  document.getElementById("colorsBox").style.display = this.checked ? "block" : "none";
+});
+
+function addMoreColors() {
+  const div = document.createElement("div");
+  div.classList.add("size-row");
+  div.innerHTML = `
+    <input type="text" name="colorName[]" placeholder="Color name" required>
+    <input type="color" name="colorCode[]" required>
+    <input type="number" name="colorPrice[]" placeholder="Price" required>
+    <input type="file" name="colorImage">
+  `;
+  document.getElementById("colorsBox").appendChild(div);
+}
+</script>
+<script>
+document.getElementById("hasVariants").addEventListener("change", function () {
+  document.getElementById("variantsBox").style.display = this.checked ? "block" : "none";
+});
+
+function addMoreVariants() {
+  const div = document.createElement("div");
+  div.classList.add("size-row");
+
+  div.innerHTML = `
+    <input type="text" name="vSize[]" placeholder="Size (S / 42)" required>
+    <input type="text" name="vColorName[]" placeholder="Color Name" required>
+    <input type="color" name="vColorCode[]" required>
+    <input type="number" name="vPrice[]" placeholder="Price" required>
+    <input type="file" name="vImage">
+  `;
+
+  document.getElementById("variantsBox").appendChild(div);
+}
+</script>
+<script>
+const menuBtn  = document.getElementById("menuBtn");
+const sidebar  = document.getElementById("sidebar");
+const overlay  = document.getElementById("overlay");
+const hasVar   = document.getElementById("hasVariants");
+const box      = document.getElementById("variantsBox");
+
+if(menuBtn){
+  menuBtn.onclick = () => {
+    sidebar.classList.toggle("show");
+    overlay.classList.toggle("show");
+  };
+}
+
+if(overlay){
+  overlay.onclick = () => {
+    sidebar.classList.remove("show");
+    overlay.classList.remove("show");
+  };
+}
+
+if(hasVar){
+  hasVar.onchange = () => {
+    box.style.display = hasVar.checked ? "block" : "none";
+  };
+}
+
+function addMoreVariants() {
+  const div = document.createElement("div");
+  div.classList.add("size-row");
+  div.innerHTML = `
+    <input type="text" name="vSize[]" placeholder="Size (S / 42)" required>
+    <input type="text" name="vColorName[]" placeholder="Color Name" required>
+    <input type="color" name="vColorCode[]" required>
+    <input type="number" name="vPrice[]" placeholder="Price" required>
+    <input type="file" name="vImage">
+  `;
+  box.appendChild(div);
+}
+</script>
+
+</body>
+</html>
