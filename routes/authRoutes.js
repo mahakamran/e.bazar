@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const auth = require('../controllers/authController');
-const Product = require("../models/Product");
+const auth = require('../controllers/authController.js');
+const Product = require("../models/Product.js");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -409,9 +409,9 @@ router.get("/my-orders", async (req, res) => {
 
 router.get("/admin/dashboard", isAdmin, async (req, res) => {
   try {
-    const Order = require("../models/Order");
-    const User = require("../models/User");
-    const Product = require("../models/Product");
+    const Order = require("../models/Order.js");
+    const User = require("../models/User.js");
+    const Product = require("../models/Product.js");
 
     const totalOrders = await Order.countDocuments();
     const totalUsers = await User.countDocuments();
@@ -484,7 +484,7 @@ router.get("/admin/dashboard", isAdmin, async (req, res) => {
   }
 });
 
-const User = require("../models/User");
+const User = require("../models/User.js");
 
 // USERS PAGE
 router.get("/admin/users", isAdmin, async (req, res) => {

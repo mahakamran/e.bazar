@@ -35,9 +35,9 @@ app.use(session({
 
 
 // Routes
-const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('./routes/authRoutes.js');
 app.use('/', authRoutes);
-const Category = require("./models/Category");
+const Category = require("./models/Category.js");
 
 async function insertDefaultCategories() {
     const defaults = ["clothes", "shoes", "watches"];
