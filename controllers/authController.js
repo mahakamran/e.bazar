@@ -1,7 +1,7 @@
-const User = require('../models/User.js');
+const User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const Product = require("../models/Product.js");
-const Category = require("../models/Category.js");
+const Product = require("../models/Product");
+const Category = require("../models/Category");
 
 
 // ---------------- REGISTER ----------------

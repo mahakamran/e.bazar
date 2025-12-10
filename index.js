@@ -17,27 +17,26 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-mongoose.connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB Connected ✅"))
-  .catch(err => console.log("DB Error ❌", err));
-
+// MongoDB Connection
+mongoose.connect('mongodb://127.0.0.1:27017/mahashop')
+    .then(() => console.log("MongoDB Connected"))
+    .catch(err => console.log(err));
 
 // Session (ONLY THIS — not 2 times!)
 app.use(session({
-    secret: process.env.SESSION_SECRET || "mahaSecretKey",
+    secret: "mahaSecretKey",
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
-        url: process.env.MONGO_URL,
+        url: 'mongodb://127.0.0.1:27017/mahashop',
         ttl: 24 * 60 * 60
     })
 }));
 
-
 // Routes
-const authRoutes = require('./routes/authRoutes.js');
+const authRoutes = require('./routes/authRoutes');
 app.use('/', authRoutes);
-const Category = require("./models/Category.js");
+const Category = require("./models/Category");
 
 async function insertDefaultCategories() {
     const defaults = ["clothes", "shoes", "watches"];
