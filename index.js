@@ -17,21 +17,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-// MongoDB Connection
-mongoose.connect('mongodb://127.0.0.1:27017/mahashop')
-    .then(() => console.log("MongoDB Connected"))
-    .catch(err => console.log(err));
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log("MongoDB Connected ✅"))
+  .catch(err => console.log("DB Error ❌", err));
+
 
 // Session (ONLY THIS — not 2 times!)
 app.use(session({
-    secret: "mahaSecretKey",
+    secret: process.env.SESSION_SECRET || "mahaSecretKey",
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
-        url: 'mongodb://127.0.0.1:27017/mahashop',
+        url: process.env.MONGO_URL,
         ttl: 24 * 60 * 60
     })
 }));
+
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
