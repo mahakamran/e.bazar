@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+require("dotenv").config();
+
 
 
 const app = express();
@@ -18,17 +20,17 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // MongoDB Connection
-mongoose.connect('mongodb://127.0.0.1:27017/mahashop')
+mongoose.connect(process.env.MONGO_URL)
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(err));
 
 // Session (ONLY THIS — not 2 times!)
 app.use(session({
-    secret: "mahaSecretKey",
+  secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
-        url: 'mongodb://127.0.0.1:27017/mahashop',
+        url:process.env.MONGO_URL,
         ttl: 24 * 60 * 60
     })
 }));
